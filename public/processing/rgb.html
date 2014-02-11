@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>RGB</title>
+		
+	</head>
+
+	<body style="background-color: #ff8033">
+		<p>0xff8033</p>
+		<button onClick="printRGB()">printRGB</button>	
+		<script>
+		function printRGB() {
+			var rgb = 0xff8033;
+
+			document.write("<h1> rgb=" + rgb + ", 0x" + rgb.toString(16) + "<h1>");
+
+			var r = rgb >> 16;
+			var g = rgb >> 8 & 0xFF;
+			var b = rgb & 0xFF;
+			
+			document.write("<h1> r=" + r + ", 0x" + r.toString(16) + "<h1>");
+			document.write("<h1> g=" + g + ", 0x" + g.toString(16) + "<h1>");
+			document.write("<h1> b=" + b + ", 0x" + b.toString(16) + "<h1>");
+		}
+		</script>
+
+	</body>
+</html>
