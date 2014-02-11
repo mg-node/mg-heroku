@@ -1,0 +1,25 @@
+{
+  "name": "mg-heroku",
+  "version": "0.0.1",
+  "description": "mg server project",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified! Configure in package.json\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mg-node/mg-heroku.git"
+  },
+  "keywords": [
+    "heroku"
+  ],
+  "author": "myounggun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mg-node/mg-heroku/issues"
+  },
+  "homepage": "https://github.com/mg-node/mg-heroku",
+  "engines": {
+	"node": "0.10.25"
+  }
+}
