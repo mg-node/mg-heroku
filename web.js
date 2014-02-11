@@ -1,3 +1,4 @@
+var http = require("http");
 var express = require("express");
 var app = express();
 var controllers = require('./patterns/controllers');
@@ -21,7 +22,7 @@ app.use(function(err, req, res, next) {
   res.send(err.message);
 });
 
-process.env.PORT = 1203;
+//process.env.PORT = 1203;
 //console.log(process.version);
 
 app.get('/', controllers.index);
@@ -33,8 +34,5 @@ prefixes.forEach(function(prefix) {
 });
 
 var port = Number(process.env.PORT || 5000);
-app.listen(port, function() {
-  console.log('Server running at http://localhost:' + port + "/");
-});
-
-// or http.createServer(app).listen(process.env.PORT);
+http.createServer(app).listen(port);
+console.log('Server running at http://myounggun.herokuapp.com:' + port + "/");

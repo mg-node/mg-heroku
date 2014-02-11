@@ -23,7 +23,7 @@
 	"node": "0.10.25"
   },
   "dependencies": {
-	"logfmt": "~0.2.0",
+	"ejs": "0.8.5",
 	"express": "3.2.6"
   }
 }
