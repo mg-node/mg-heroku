@@ -7,13 +7,13 @@
 
 	<body>
 		<image id="image" src="image.jpg"/>
-		<button onClick="convert()">convert
+		<button onClick="processing()">processing
 		</button>
 		<canvas id="canvas"></canvas>
 		
 		<script>
 
-		function convert()
+		function processing()
 		{
 			var rgb = 0xff8033;
 			//console.log(rgb.toString(10));
@@ -67,7 +67,7 @@
 	        	imageData.data[i * 4 + 3] = a;
 			}
 			
-	        context.putImageData(imageData, 0, 0); // at coords 0,0 */
+			context.putImageData(imageData, 0, 0); // at coords 0,0 */
 	
 			console.log(colors);
 		}
