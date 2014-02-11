@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>grayscale</title>
+		
+	</head>
+
+	<body>
+		<image id="image" src="image.jpg"/>
+		<button onClick="convert()">convert
+		</button>
+		<canvas id="canvas"></canvas>
+		
+		<script>
+
+		function convert()
+		{
+			var rgb = 0xff8033;
+			//console.log(rgb.toString(10));
+			console.log(rgb);
+			
+			var red = rgb >> 16;
+			var green = rgb >> 8 & 0xFF;
+			var blue = rgb & 0xFF;
+			
+			console.log(red, red.toString(16));
+			console.log(green, green.toString(16));
+			console.log(blue, blue.toString(16));
+			
+			
+			
+			//return;
+			var image = document.getElementById("image");
+			var canvas = document.getElementById("canvas");
+			
+			image.crossOrigin='*'
+			
+			var w = image.width;
+			var h = image.height;
+			var l = w * h;
+			
+			canvas.width = w;
+			canvas.height = h;
+			
+			var context = canvas.getContext("2d");
+			
+			context.drawImage(image, 0, 0);
+			
+			var imageData = context.getImageData(0, 0, w, h);
+			
+			var r,g,b,a,lum,color;
+			
+			var colors = [];
+			for (i = 0; i < l; i++) {
+				r = imageData.data[i * 4 + 0];
+				g = imageData.data[i * 4 + 1];
+				b = imageData.data[i * 4 + 2];
+				a = imageData.data[i * 4 + 3];
+				
+				lum = (0.299*r + 0.587*g + 0.114*b);
+				
+				colors.push(imageData.data[i]);
+				//console.log(r.toString(16), g.toString(16), b.toString(16), a.toString(16), lum.toString(16));
+	        	imageData.data[i * 4 + 0] = lum;
+	        	imageData.data[i * 4 + 1] = lum;
+	        	imageData.data[i * 4 + 2] = lum;
+	        	imageData.data[i * 4 + 3] = a;
+			}
+			
+	        context.putImageData(imageData, 0, 0); // at coords 0,0 */
+	
+			console.log(colors);
+		}
+			
+
+		</script>
+
+	</body>
+</html>

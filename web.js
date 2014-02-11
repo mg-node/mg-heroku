@@ -1,13 +1,12 @@
 // web.js
 var express = require("express");
-//var logfmt = require("logfmt");
 var app = express();
-
-//app.use(logfmt.requestLogger());
 
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
+
+app.use(express.static(__dirname + '/public'));
 
 console.log(process.version);
 
