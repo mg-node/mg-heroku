@@ -22,9 +22,6 @@ app.use(function(err, req, res, next) {
   res.send(err.message);
 });
 
-//process.env.PORT = 1203;
-//console.log(process.version);
-
 app.get('/', controllers.index);
 
 // prefix route

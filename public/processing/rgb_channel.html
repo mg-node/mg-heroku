@@ -5,9 +5,9 @@
 	</head>
 	<body>
 		<image id="image" src="image.jpg"/>
-		<button onClick="processing()">processing
-		</button>
+		<button onClick="processing()">processing</button>
 		<canvas id="canvas"></canvas>
+		
 		<script>
 		function processing() {
 			var image = document.getElementById("image");
@@ -21,8 +21,7 @@
 
 			var imageData = context.getImageData(0, 0, image.width, image.height);
 			
-			var r,g,b,a,lum,color;
-			var colors = [];
+			var r,g,b,a,lum;
 			var len = image.width * image.height;
 			for (var i = 0; i < len; i++) {
 				r = imageData.data[i * 4 + 0];
@@ -30,18 +29,17 @@
 				b = imageData.data[i * 4 + 2];
 				a = imageData.data[i * 4 + 3];
 				
-				lum = 0.299 * r + 0.587 * g + 0.114 * b;
+				g = b = 0; // only r
+				//r = b = 0; // only g
+				//r = g = 0; // only b
 				
-				colors.push(imageData.data[i]);
-				//console.log(r.toString(16), g.toString(16), b.toString(16), a.toString(16), lum.toString(16));
-				imageData.data[i * 4 + 0] = lum;
-				imageData.data[i * 4 + 1] = lum;
-				imageData.data[i * 4 + 2] = lum;
+				imageData.data[i * 4 + 0] = r;
+				imageData.data[i * 4 + 1] = g;
+				imageData.data[i * 4 + 2] = b;
 				imageData.data[i * 4 + 3] = a;
 			}
 			
 			context.putImageData(imageData, 0, 0); // at coords 0,0 */
-			console.log(colors);
 		}
 		</script>
 	</body>

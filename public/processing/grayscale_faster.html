@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>grayscale</title>
+		<title>grayscale faster</title>
 	</head>
 	<body>
 		<image id="image" src="image.jpg"/>
@@ -22,7 +22,6 @@
 			var imageData = context.getImageData(0, 0, image.width, image.height);
 			
 			var r,g,b,a,lum,color;
-			var colors = [];
 			var len = image.width * image.height;
 			for (var i = 0; i < len; i++) {
 				r = imageData.data[i * 4 + 0];
@@ -30,18 +29,22 @@
 				b = imageData.data[i * 4 + 2];
 				a = imageData.data[i * 4 + 3];
 				
-				lum = 0.299 * r + 0.587 * g + 0.114 * b;
+				//lum = 0.299 * r + 0.587 * g + 0.114 * b; // the original float computation
+				//lum = (2 * r + 5 * g + 1 * b) / 8;       // integer domain is much faster than in float
 				
-				colors.push(imageData.data[i]);
-				//console.log(r.toString(16), g.toString(16), b.toString(16), a.toString(16), lum.toString(16));
+				// about 4 times faster than the original float computation
+				lum  = r << 1;       // 2 * r
+				lum += (g << 2) + g; // 5 * g
+				lum += b;            // 1 * b
+			    lum = lum >> 3;      // div 8
+				
 				imageData.data[i * 4 + 0] = lum;
 				imageData.data[i * 4 + 1] = lum;
 				imageData.data[i * 4 + 2] = lum;
 				imageData.data[i * 4 + 3] = a;
 			}
-			
+
 			context.putImageData(imageData, 0, 0); // at coords 0,0 */
-			console.log(colors);
 		}
 		</script>
 	</body>
