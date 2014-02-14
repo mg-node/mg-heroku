@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+ <title><%= title %></title>
+</head>
+<body>
+<h1><%= title %></h1>
+<% if (chapters.length) { %>
+	<ul>
+		<% chapters.forEach(function(chapter) { %>
+			<li>
+				<%= chapter.name %>
+				[ <a href='<%= chapter.link %>' target='_blank'>link </a> ]
+			</li>
+		<% }) %>
+	</ul>
+<% } %>
+</body>
+</html>

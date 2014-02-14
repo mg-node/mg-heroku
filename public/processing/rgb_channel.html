@@ -4,8 +4,9 @@
 		<title>grayscale</title>
 	</head>
 	<body>
-		<image id="image" src="image.jpg"/>
-		<button onClick="processing()">processing</button>
+		<button onClick="processing()">processing</button><br>
+		
+		<image id="image" src="images/image.jpg"/>
 		<canvas id="canvas"></canvas>
 		
 		<script>
@@ -39,7 +40,7 @@
 				imageData.data[i * 4 + 3] = a;
 			}
 			
-			context.putImageData(imageData, 0, 0); // at coords 0,0 */
+			context.putImageData(imageData, 0, 0); // add (0, 0)
 		}
 		</script>
 	</body>

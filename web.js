@@ -25,7 +25,7 @@ app.use(function(err, req, res, next) {
 app.get('/', controllers.index);
 
 // prefix route
-var prefixes = ['nodestudy'];
+var prefixes = ['nodestudy', 'processing'];
 prefixes.forEach(function(prefix) {
 	webrouter.route(app, prefix);
 });

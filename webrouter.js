@@ -7,4 +7,5 @@ exports.route = function(app, prefix) {
    var prefixObj = require('./patterns/controllers/' + prefix);
 
    app.get(prefix, prefixObj.index);
+   //app.get(prefix + ':id', prefixObj.show);
 };
