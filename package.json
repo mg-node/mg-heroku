@@ -24,6 +24,8 @@
   },
   "dependencies": {
 	"ejs": "0.8.5",
-	"express": "3.2.6"
+	"express": "3.2.6",
+	"redis": "0.10.0",
+	"hiredis": "0.1.16"
   }
 }
