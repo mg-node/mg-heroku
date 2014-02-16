@@ -22,6 +22,10 @@ app.use(function(err, req, res, next) {
   res.send(err.message);
 });
 
+if ('development' == app.get('env')) {
+	app.use(express.errorHandler());
+}
+
 app.get('/', controllers.index);
 
 // prefix route
