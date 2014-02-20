@@ -1,24 +1,56 @@
-/*
- *  German cars: service center list
- */
-var MongoClient = require('mongodb').MongoClient;
+var ServiceCenter = require('../models/dasauto/servicecenter.js');
 
-exports.index = function(req, res){
-	MongoClient.connect("mongodb://localhost:27017/dasauto", function(err, db) {
-	  if(err) { 
-		  return console.dir(err);
-	  } 
-	  console.log('db open');
-	  db.collection('ascenter', function(err, collection) {
-		  console.log('collection ascenter');
-	  });
+exports.index = function(req, res) {
+	ServiceCenter.find({}, function(err, docs) {
+		var datas = {
+				title: 'Service Center List',
+				ascenters: docs
+		};
+		
+		res.render('dasauto/index', {
+			locals: datas,
+			cache: false
+		});
 	});
+};
+
+exports.saveform = function(req, res) {
+	var path = require('path');
+	var filePath = path.normalize(__dirname + "/../../public/dasauto/saveform.html");
 	
-  res.render('index', { title: 'Service Center List' }, function(err, stuff) {
-     if (!err) { // 컨텐트를 브라우저 뿐 아니라 콘솔로 출
-        console.log(stuff);
-        res.write(stuff);
-        res.end();
-     }
-  });
+	res.sendfile(filePath);
+};
+
+exports.save = function(req, res) {
+	var item = {
+			uid     : req.body.uid,
+			company : req.body.company,
+			dealer  : req.body.dealer,
+			title   : req.body.title,
+			address : req.body.address,
+			tel     : req.body.tel
+	};
+	
+	var collection = new ServiceCenter(item);
+	
+	collection.save(function(err, data) {
+		if (err) {
+			res.send(err);
+		} else {
+			console.log(data);
+			res.send('added ok');
+		}
+	});
+};
+
+exports.show = function(req, res) {
+	var uid = req.params.uid;
+	
+	ServiceCenter.findOne({ uid: uid }, function(err, doc) {
+		if (err) {
+			res.send('There is no center with uid of ' + uid);
+		} else {
+			console.log('show = ' + doc);
+		}
+	});
 };

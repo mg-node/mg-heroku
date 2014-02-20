@@ -3,6 +3,16 @@ var express = require("express");
 var app = express();
 var controllers = require('./patterns/controllers');
 var webrouter = require('./webrouter');
+var mongoose = require('mongoose');
+
+// dasauto db connect
+mongoose.connect('mongodb://localhost/dasautoDB');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log('connect to mongoose, dasautoDB opened');
+});
 
 app.set('views', __dirname + '/patterns/views');
 app.set('view engine', 'ejs');
@@ -36,13 +46,15 @@ prefixes.forEach(function(prefix) {
 
 var dasauto = require('./patterns/controllers/dasauto');
 app.get('/dasauto', dasauto.index);
-
+app.get('/dasauto/saveform', dasauto.saveform);
+app.post('/dasauto/save', dasauto.save);
+app.get('/dasauto/:uid', dasauto.show);
 
 var port = Number(process.env.PORT || 8080);
 http.createServer(app).listen(port);
 console.log('Server running at http://myounggun.herokuapp.com:' + port + "/");
 
-var async = requir('async');
+/*var async = requir('async');
 var MongoClient = require('mongodb').MongoClient;
 MongoClient.connect("mongodb://localhost:27017/exampleDb", function(err, db) {
 	if(err) {
@@ -88,4 +100,4 @@ MongoClient.connect("mongodb://localhost:27017/exampleDb", function(err, db) {
 			});
 		});
 	});
-});
+});*/

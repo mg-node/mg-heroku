@@ -31,7 +31,7 @@ var chapters = [
 var datas = { 
 	title: 'image processing examples', 
 	chapters: chapters 
-}
+};
 
 exports.index = function(req, res) {
 	res.render('processing/index', { 

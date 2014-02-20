@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title><%= title %></title>
+</head>
+<body>
+<% if (ascenters.length) { %>
+	<table>
+		<caption>Service Center List</caption>
+		<tr><th>Name</th><th>Address</th><th>Tel</th></tr>
+		<% ascenters.forEach(function(ascenter) { %>
+			<tr>
+				<td><%= ascenter.title %></td>
+				<td><%= ascenter.address %></td>
+				<td><%= ascenter.tel %></td>
+				<td><a href="#">Edit</a></td>
+				<td><a href="#">Delete</a></td>
+			</tr>
+		<% }); %>
+	</table>
+<% } %>
+</body>
+</html>
