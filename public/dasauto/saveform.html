@@ -1,23 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
- <meta charset="utf-8" />
- <title>das auto : new center</title>
+	<meta charset="utf-8" />
+	<title>das auto, new service center</title>
 </head>
 <body>
-<h1>New As Center:</h1>
+<h1>New Service Center:</h1>
 
-<form method="POST" action="/dasauto/create" enctype="application/x-www-form-urlencoded">
-
-<p>uid: <input type="text" id="uid" name="uid" size="25" required /></p>
-<p>company: <input type="text" name="company" id="company" size="25" required/></p>
-<p>dealer: <input type="text" name="dealer" id="dealer" size="25" required/></p>
-<p>title: <input type="text" name="title" id="title" size="25" required/></p>
-<p>address: <input type="text" name="address" id="address" size="50" required/></p>
-<p>tel: <input type="text" name="tel" id="tel" size="25" required/></p>
-
- <input type="submit" name="submit" id="submit" value="Submit"/>
- <input type="reset" name="reset" id="reset" value="Reset"/>
- </p>
- </form>
+<form method="POST" action="/dasauto/save" enctype="application/x-www-form-urlencoded">
+	<p>company
+		<select name="company" id="company">
+	    <option value="BMW" selected>BMW</option>
+	    <option value="BENZ">BENZ</option>
+	    <option value="AUDI">AUDI</option></select>
+    </p>
+	<p>dealer<br>
+		<input type="text" name="dealer" id="dealer" size="50" required/>
+	</p>
+	<p>title<br>
+		<input type="text" name="title" id="title" size="50" required/>
+	</p>
+	<p>address<br>
+		<input type="text" name="address" id="address" size="50" required/>
+	</p>
+	<p>tel<br>
+		<input type="text" name="tel" id="tel" size="50" required/>
+	</p>
+	
+	<input type="submit" name="submit" id="submit" value="Submit"/>
+	<input type="reset" name="reset" id="reset" value="Reset"/>
+</form>
 </body>

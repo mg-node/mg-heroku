@@ -5,15 +5,15 @@
 <title><%= title %></title>
 </head>
 <body>
-<% if (ascenters.length) { %>
-	<table>
+<% if (servicecenters.length) { %>
+	<table border=1>
 		<caption>Service Center List</caption>
-		<tr><th>Name</th><th>Address</th><th>Tel</th></tr>
-		<% ascenters.forEach(function(ascenter) { %>
+		<tr><th>Name</th><th>Address</th><th>Tel</th><th></th><th></th></tr>
+		<% servicecenters.forEach(function(serivcecenter) { %>
 			<tr>
-				<td><%= ascenter.title %></td>
-				<td><%= ascenter.address %></td>
-				<td><%= ascenter.tel %></td>
+				<td><%= serivcecenter.company %> <%= serivcecenter.dealer %> <%= serivcecenter.title %></td>
+				<td><%= serivcecenter.address %></td>
+				<td><%= serivcecenter.tel %></td>
 				<td><a href="#">Edit</a></td>
 				<td><a href="#">Delete</a></td>
 			</tr>
