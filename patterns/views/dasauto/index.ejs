@@ -7,18 +7,20 @@
 <body>
 <% if (servicecenters.length) { %>
 	<table border=1>
-		<caption>Service Center List</caption>
-		<tr><th>Name</th><th>Address</th><th>Tel</th><th></th><th></th></tr>
+		<caption><h3>Service Center List</h3></caption>
+		<tr><th>ID</th><th>Name</th><th>Address</th><th>Tel</th><th></th><th></th></tr>
 		<% servicecenters.forEach(function(serivcecenter) { %>
 			<tr>
+				<td><%= serivcecenter.uid %></td>
 				<td><%= serivcecenter.company %> <%= serivcecenter.dealer %> <%= serivcecenter.title %></td>
 				<td><%= serivcecenter.address %></td>
 				<td><%= serivcecenter.tel %></td>
-				<td><a href="#">Edit</a></td>
+				<td><a href="./<%= serivcecenter.uid %>/edit">Edit</a></td>
 				<td><a href="#">Delete</a></td>
 			</tr>
 		<% }); %>
 	</table>
+	<p><a href="/dasauto/regist">Regist</a></p>
 <% } %>
 </body>
 </html>

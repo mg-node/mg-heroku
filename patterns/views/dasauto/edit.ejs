@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>das auto, edit service center</title>
+</head>
+<body>
+<h1>Edit Service Center:</h1>
+
+<form method="POST" action="/dasauto/<%= servicecenter.uid %>" enctype="application/x-www-form-urlencoded">
+	<p>dealer<br>
+		<input type="text" name="dealer" id="dealer" size="50" value="<%= servicecenter.dealer %>" required/>
+	</p>
+	<p>title<br>
+		<input type="text" name="title" id="title" size="50" value="<%= servicecenter.title %>" required/>
+	</p>
+	<p>address<br>
+		<input type="text" name="address" id="address" size="50" value="<%= servicecenter.address %>" required/>
+	</p>
+	<p>tel<br>
+		<input type="text" name="tel" id="tel" size="50" value="<%= servicecenter.tel %>" required/>
+	</p>
+	<input type="hidden" name="_method" id="_method" value="put"/>
+	<input type="submit" name="submit" id="submit" value="Submit"/>
+	<input type="reset" name="reset" id="reset" value="Reset"/>
+</form>
+</body>

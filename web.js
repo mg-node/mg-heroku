@@ -32,7 +32,7 @@ app.use(function(err, req, res, next) {
   res.send(err.message);
 });
 
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
 	app.use(express.errorHandler());
 }
 
@@ -46,9 +46,12 @@ prefixes.forEach(function(prefix) {
 
 var dasauto = require('./patterns/controllers/dasauto');
 app.get('/dasauto', dasauto.index);
-app.get('/dasauto/saveform', dasauto.saveform);
+app.get('/dasauto/regist', dasauto.regist);
 app.post('/dasauto/save', dasauto.save);
 app.get('/dasauto/:uid', dasauto.show);
+app.get('/dasauto/:uid/edit', dasauto.edit);
+app.put('/dasauto/:uid', dasauto.update);
+app.del('/dasauto/:uid', dasauto.del);
 
 var port = Number(process.env.PORT || 8080);
 http.createServer(app).listen(port);

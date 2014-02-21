@@ -5,7 +5,7 @@ var ObjectId = Schema.ObjectId;
 
 // create ServiceCenter Schema
 var ServiceCenter = new Schema({
-	uid      : { type: String, require: true, trim: true, unique: true }, // bmw001
+	uid      : { type: String, require: true, trim: true, unique: true }, // BMW-001
 	company  : { type: String, require: true, trim: true }, //'BMW',
 	dealer   : { type: String, required: true, trim: true }, //'한독',
 	title    : { type: String, required: true, trim: true }, //'분당서비스센터',

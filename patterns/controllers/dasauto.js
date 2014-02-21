@@ -1,5 +1,6 @@
 var ServiceCenter = require('../models/dasauto/servicecenter.js');
 var async = require('async');
+var path = require('path');
 
 exports.index = function(req, res) {
 	ServiceCenter.find({}, function(err, docs) {
@@ -15,9 +16,8 @@ exports.index = function(req, res) {
 	});
 };
 
-exports.saveform = function(req, res) {
-	var path = require('path');
-	var filePath = path.normalize(__dirname + "/../../public/dasauto/saveform.html");
+exports.regist = function(req, res) {
+	var filePath = path.normalize(__dirname + "/../../public/dasauto/regist.html");
 	
 	res.sendfile(filePath);
 };
@@ -25,15 +25,13 @@ exports.saveform = function(req, res) {
 exports.save = function(req, res) {
 	async.waterfall([
 		function(callback) {
-			var cnt = 0;
 			ServiceCenter.find({company: req.body.company}, function(err, docs) {
-				cnt = docs.length + 1;
+				var cnt = docs.length + 1;
+				callback(null, cnt);
 			});
-			
-			callback(null, cnt);
 		},
 		function(cnt, callback) {
-			var uid = ('000' + cnt).slice(-3);
+			var uid = req.body.company + '-' + ('000' + cnt).slice(-3);
 			var item = {
 					uid     : uid,
 					company : req.body.company,
@@ -45,12 +43,19 @@ exports.save = function(req, res) {
 			
 			var collection = new ServiceCenter(item);
 			
-			collection.save(function(err, data) {
+			collection.save(function(err, doc) {
 				if (err) {
 					res.send(err);
 				} else {
-					console.log(data);
-					res.send('added ok');
+					var datas = {
+							title: 'Added',
+							servicecenter: doc
+					};
+					
+					res.render('dasauto/added', {
+						locals: datas,
+						cache: false
+					});
 				}
 			});
 			
@@ -71,9 +76,8 @@ exports.show = function(req, res) {
 		if (err) {
 			res.send('There is no center with uid of ' + uid);
 		} else {
-			console.log('show = ' + doc);
 			var datas = {
-					title: 'Service Center List',
+					title: 'Service Center',
 					servicecenter: doc
 			};
 			
@@ -83,4 +87,42 @@ exports.show = function(req, res) {
 			});
 		}
 	});
+};
+
+exports.del = function(req, res) {
+	var uid = req.params.uid;
+	
+	ServiceCenter.remove({ uid: uid}, function(err, doc) {
+		if (err) {
+			res.send('There is no center with uid of ' + uid);
+		} else {
+			res.send('delected ' + uid);
+		}
+	});
+};
+
+exports.edit = function(req, res) {
+	var uid = req.params.uid;
+	
+	ServiceCenter.findOne({ uid: uid }, function(err, doc) {
+		if (err) {
+			res.send('There is no center with uid of ' + uid);
+		} else {
+			var datas = {
+					title: 'Edit Service Center',
+					servicecenter: doc
+			};
+			
+			res.render('dasauto/edit', {
+				locals: datas,
+				cache: false
+			});
+		}
+	});
+};
+
+exports.update = function(req, res) {
+	var uid = req.params.uid;
+	
+	res.send('TODO: update ' + uid);
 };
