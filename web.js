@@ -3,16 +3,6 @@ var express = require("express");
 var app = express();
 var controllers = require('./patterns/controllers');
 var webrouter = require('./webrouter');
-var mongoose = require('mongoose');
-
-// dasauto db connect
-mongoose.connect('mongodb://localhost/dasautoDB');
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log('connect to mongoose, dasautoDB opened');
-});
 
 app.set('views', __dirname + '/patterns/views');
 app.set('view engine', 'ejs');
