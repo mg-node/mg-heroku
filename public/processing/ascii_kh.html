@@ -72,7 +72,8 @@
 						}
 
 						if (isColor) {
-							mosicChars += "<span style='color:rgb("+r+","+g+","+b+");'>" + mosicChar + "</span>";
+							mosicChars += "<span style='white-space: pre; color:rgb("+(255-r)+","+(255-g)+","+(255-b)+");"
+										+ "background-color:rgb("+r+","+g+","+b+");'>" + mosicChar + "</span>";
 						} else {
 							mosicChars += mosicChar;
 						}
