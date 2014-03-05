@@ -13,6 +13,10 @@
 		    left: 0px;
 		    top: 300px;
 		}
+		button {
+			width: 200px;
+			height: 50px;
+		}
 		</style>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	</head>
@@ -41,51 +45,51 @@
 			
 			context.drawImage(image, 0, 0, w, h);
 	
-			var mosicChars = "";
-			var mosicResource = ("!@#$%^&*();<>/?{}[]|~").split("");
-			var mosicLastIndex = mosicResource.length - 1;
+			var mosaicChars = [];
+			var mosaicResource = ("!@#$%^&*();<>/?{}[]|~").split("");
+			var mosaicLastIndex = mosaicResource.length - 1;
 
 			var r, g, b, a, colorIndex, lum;
 			var imageData = context.getImageData(0, 0, w, h).data;
 			for (var y = 0; y < h; y +=2) {
 				for (var x=0; x < w; x++) {
-						colorIndex = (y * w + x) * 4;
+					colorIndex = (y * w + x) * 4;
 
-						r = imageData[colorIndex + 0];
-						g = imageData[colorIndex + 1];
-						b = imageData[colorIndex + 2];
-						a = imageData[colorIndex + 3];
+					r = imageData[colorIndex + 0];
+					g = imageData[colorIndex + 1];
+					b = imageData[colorIndex + 2];
+					a = imageData[colorIndex + 3];
 
-						lum = r << 1;        // 2 * r
-						lum += (g << 2) + g; // 5 * g
-						lum += b;            // 1 * b
-						lum = lum >> 3;      // div 8
+					lum = r << 1;        // 2 * r
+					lum += (g << 2) + g; // 5 * g
+					lum += b;            // 1 * b
+					lum = lum >> 3;      // div 8
 
-						var mosicIndex = mosicLastIndex - Math.round((lum / 255) * mosicLastIndex);
-						if (isInvert) {
-							mosicIndex = mosicLastIndex - mosicIndex;
-						}
-
-						var mosicChar = mosicResource[mosicIndex];
-						if (mosicChar == " ") {
-							mosicChar = "&nbsp;";
-						}
-
-						if (isColor) {
-							mosicChars += "<span style='white-space: pre; color:rgb("+(255-r)+","+(255-g)+","+(255-b)+");"
-										+ "background-color:rgb("+r+","+g+","+b+");'>" + mosicChar + "</span>";
-						} else {
-							mosicChars += mosicChar;
-						}
+					var mosaicIndex = mosaicLastIndex - Math.round((lum / 255) * mosaicLastIndex);
+					if (isInvert) {
+						mosaicIndex = mosaicLastIndex - mosaicIndex;
 					}
 
-					mosicChars += "<br/>";
+					var mosaicChar = mosaicResource[mosaicIndex];
+					if (mosaicChar == " ") {
+						mosaicChar = "&nbsp;";
+					}
+	
+					if (isColor) {
+						mosaicChar = "<span style='color:rgb("+(255-r)+","+(255-g)+","+(255-b)+");"
+									+ "background-color:rgb("+r+","+g+","+b+");'>" + mosaicChar + "</span>";
+					}
+					
+					mosaicChars.push(mosaicChar);
+				}
+
+				mosaicChars.push("<br/>");
 			}
 
 			var outputEl = $("#output");
 
 			outputEl.empty();
-			outputEl.append(mosicChars);
+			outputEl.append(mosaicChars.join(""));
 		}
 		</script>
 	</body>
