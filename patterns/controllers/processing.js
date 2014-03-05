@@ -21,6 +21,10 @@ var chapters = [
 	{
 		name: 'blending',
 		link: './blending.html'
+	},
+	{
+		name: 'ascii',
+		link: './ascii.html'
 	}
 ];
 
