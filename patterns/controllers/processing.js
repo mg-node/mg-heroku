@@ -23,7 +23,7 @@ var chapters = [
 		link: './blending.html'
 	},
 	{
-		name: 'ascii',
+		name: 'ascii mosaic',
 		link: './ascii.html'
 	}
 ];
