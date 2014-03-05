@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ascii</title>
+	</head>
+	<body>
+		<button onClick="processing()">processing</button><br>
+		
+		<image id="image" src="images/image.jpg"/>
+		<canvas id="canvas"></canvas>
+		<input type="text" id="asciiText">
+		<script>
+		function createMosicResource() {
+			var str = '!,@,#,$,%,^,&,*,(,),;,<,>,/,?,{,},[,],|,~';
+			var resource = str.split(",");
+			console.log(resource);
+
+			var mosicArray = [];
+			var len = resource.length;
+			var rampLen = len - 1;
+
+			for (var i = 0; i < 256; i++) {
+				var index = parseInt((i / 255) * (resource.length - 1);
+				console.log(index);
+				mosicArray[i] = resource[index];
+			}
+
+			console.log(mosicArray);
+			return mosicArray;
+		}
+
+		function processing() {
+			
+			var image = document.getElementById("image");
+			var canvas = document.getElementById("canvas");
+			var asciiText = document.getElementById("asciiText");
+			var context = canvas.getContext("2d");
+			
+			canvas.width  = image.width;
+			canvas.height = image.height;
+			
+			context.drawImage(image, 0, 0);
+
+			var imageData = context.getImageData(0, 0, image.width, image.height);
+			
+			var mosicText = '';
+			var r,g,b,a,lum,color;
+			var len = image.width * image.height;
+			for (var i = 0; i < len; i++) {
+				r = imageData.data[i * 4 + 0];
+				g = imageData.data[i * 4 + 1];
+				b = imageData.data[i * 4 + 2];
+				a = imageData.data[i * 4 + 3];
+				
+				//lum = 0.299 * r + 0.587 * g + 0.114 * b; // the original float computation
+				//lum = (2 * r + 5 * g + 1 * b) / 8;       // integer domain is much faster than in float
+				
+				// about 4 times faster than the original float computation
+				lum  = r << 1;       // 2 * r
+				lum += (g << 2) + g; // 5 * g
+				lum += b;            // 1 * b
+				lum = lum >> 3;      // div 8
+
+				var mosicResource = createMosicResource();
+				mosicText += mosicResource[lum];
+				
+				imageData.data[i * 4 + 0] = lum;
+				imageData.data[i * 4 + 1] = lum;
+				imageData.data[i * 4 + 2] = lum;
+				imageData.data[i * 4 + 3] = a;
+			}
+
+			context.putImageData(imageData, 0, 0); // add (0, 0)
+
+			asciiText.value = mosicText;
+		}
+		</script>
+	</body>
+</html>
