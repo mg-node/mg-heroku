@@ -33,7 +33,7 @@
 			var canvas = document.getElementById("canvas");
 			var context = canvas.getContext("2d");
 			
-			var resolution = 1;
+			var resolution = 0.5;
 			var isColor = true;
 			var isInvert = true;
 
@@ -76,7 +76,8 @@
 					}
 	
 					if (isColor) {
-						mosaicChar = "<span style='color:rgb("+r+","+g+","+b+");'>" + mosaicChar + "</span>";
+						mosaicChar = "<span style='color:rgb("+(255-r)+","+(255-g)+","+(255-b)+");"
+									+ "background-color:rgb("+r+","+g+","+b+");'>" + mosaicChar + "</span>";
 					}
 					
 					mosaicChars.push(mosaicChar);
