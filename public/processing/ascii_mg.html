@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ascii</title>
+		<style type="text/css">
+		body {
+			letter-spacing: -1px;
+			font-family: 'courier new';
+			font-size: 8px;
+		}
+		div {
+		    position: absolute;
+		    left: 0px;
+		    top: 300px;
+		}
+		button {
+			width: 200px;
+			height: 50px;
+		}
+		</style>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	</head>
+	<body>
+		<button onClick="processing()">processing</button><br>
+		
+		<image id="image" src="images/mg.jpg"/>
+		<canvas id="canvas"></canvas>
+		<div id='output'></div>
+		<script>
+
+		function processing() {
+			var image = document.getElementById("image");
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+			
+			var resolution = 1;
+			var isColor = true;
+			var isInvert = true;
+
+			var w = Math.round(image.width * resolution);
+			var h = Math.round(image.height * resolution);
+
+			canvas.width  = w;
+			canvas.height = h;
+			
+			context.drawImage(image, 0, 0, w, h);
+	
+			var mosaicChars = [];
+			var mosaicResource = ("!@#$%^&*();<>/?{}[]|~").split("");
+			var mosaicLastIndex = mosaicResource.length - 1;
+
+			var r, g, b, a, colorIndex, lum;
+			var imageData = context.getImageData(0, 0, w, h).data;
+			for (var y = 0; y < h; y +=2) {
+				for (var x=0; x < w; x++) {
+					colorIndex = (y * w + x) * 4;
+
+					r = imageData[colorIndex + 0];
+					g = imageData[colorIndex + 1];
+					b = imageData[colorIndex + 2];
+					a = imageData[colorIndex + 3];
+
+					lum = r << 1;        // 2 * r
+					lum += (g << 2) + g; // 5 * g
+					lum += b;            // 1 * b
+					lum = lum >> 3;      // div 8
+
+					var mosaicIndex = mosaicLastIndex - Math.round((lum / 255) * mosaicLastIndex);
+					if (isInvert) {
+						mosaicIndex = mosaicLastIndex - mosaicIndex;
+					}
+
+					var mosaicChar = mosaicResource[mosaicIndex];
+					if (mosaicChar == " ") {
+						mosaicChar = "&nbsp;";
+					}
+	
+					if (isColor) {
+						mosaicChar = "<span style='color:rgb("+r+","+g+","+b+");'>" + mosaicChar + "</span>";
+					}
+					
+					mosaicChars.push(mosaicChar);
+				}
+
+				mosaicChars.push("<br/>");
+			}
+
+			var outputEl = $("#output");
+
+			outputEl.empty();
+			outputEl.append(mosaicChars.join(""));
+		}
+		</script>
+	</body>
+</html>
