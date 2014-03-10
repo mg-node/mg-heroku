@@ -26,6 +26,8 @@ if ('development' === app.get('env')) {
 	app.use(express.errorHandler());
 }
 
+debugger;
+
 app.get('/', controllers.index);
 
 // prefix route
