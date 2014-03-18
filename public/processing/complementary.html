@@ -31,14 +31,20 @@
 				b = imageData.data[i * 4 + 2];
 				a = imageData.data[i * 4 + 3];
 				
-				var hsb = rgbToHsv(r, g, b);
-				if (hsb[0] < 0.5) {
-					hsb[0] += 0.5;
-				} else {
-					hsb[0] -= 0.5;
-				}
-				var rgb = hsvToRgb(hsb[0], hsb[1], hsb[2]);
+				var hsv = rgbToHsv(r, g, b);
 				
+				// hue
+				if (hsv[0] < 0.5) { 
+					hsv[0] += 0.5;
+				} else {
+					hsv[0] -= 0.5;
+				}
+				
+				//saturation
+				//hsv[1] *= 0.5; 
+				
+				var rgb = hsvToRgb(hsv[0], hsv[1], hsv[2]);
+
 				imageData.data[i * 4 + 0] = rgb[0];
 				imageData.data[i * 4 + 1] = rgb[1];
 				imageData.data[i * 4 + 2] = rgb[2];
