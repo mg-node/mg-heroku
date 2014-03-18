@@ -29,6 +29,10 @@ var chapters = [
 	{
 		name: 'ascii mosaic advanced',
 		link: './ascii_advanced.html'
+	},
+	{
+		name: 'complementary',
+		link: './complementary.html'
 	}
 ];
 
