@@ -4,7 +4,8 @@
   "description": "mg server project",
   "main": "web.js",
   "scripts": {
-    "test": "echo \\\"Error: no test specified! Configure in package.json\\\" && exit 1"
+    "test": "echo \\\"Error: no test specified! Configure in package.json\\\" && exit 1",
+    "start": "node web.js"
   },
   "repository": {
     "type": "git",
