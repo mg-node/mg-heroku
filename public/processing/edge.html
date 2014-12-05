@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>edge detection</title>
+		<style type="text/css">
+		button {
+			width: 200px;
+			height: 50px;
+		}
+		</style>
+	</head>
+	<body>
+		<button onClick="processing()">processing</button><br>
+		
+		<image id="image" src="images/jans.jpg"/>
+		<canvas id="canvas"></canvas>
+		
+		<script>
+		var image = document.getElementById("image"),
+			canvas = document.getElementById("canvas"),
+			context = canvas.getContext("2d");
+			
+
+		function getPixel(x, y) {
+			return context.getImageData(x, y, 1, 1);
+		}
+
+		function toGray(pixel) {
+			var d = pixel.data;
+
+			return (d[0] + d[1] + d[2]) / 3;
+
+			var r,g,b,lum;
+
+			r = d[0];
+			g = d[1];
+			b = d[2];
+
+			lum  = r << 1;       // 2 * r
+			lum += (g << 2) + g; // 5 * g
+			lum += b;            // 1 * b
+			lum = lum >> 3;      // div 8
+
+			return lum;
+		}
+
+		function processing() {
+			var w = canvas.width  = image.width;
+			var h = canvas.height = image.height;
+
+			context.drawImage(image, 0, 0, w, h);
+			var amp = 1;
+			var d = [];
+
+			// Roberts
+			// var mx = [ 0,  0,  0,
+			// 		   0,  1,  0, 
+			// 		   0,  0, -1];
+			// var my = [ 0,  0,  0, 
+			// 		   0,  0,  1, 
+			// 		   0, -1,  0];
+
+			// Prewitt
+			// var mx = [-1,  0,  1,
+			// 		  -1,  0,  1, 
+			// 		  -1,  0,  1];
+			// var my = [ 1,  1,  1, 
+			// 		   0,  0,  0, 
+			// 		  -1, -1, -1];
+
+			// Sobel
+			var mx = [-1,  0,  1, 
+					  -2,  0,  2, 
+					  -1,  0,  1];
+			var my = [ 1,  2,  1, 
+					   0,  0,  0, 
+					  -1, -2, -1];
+
+			// Frei-Chen
+			// var s = Math.sqrt(2);
+			// var mx = [-1,  0,  1, 
+			// 		  -s,  0,  s, 
+			// 		  -1,  0,  1];
+			// var my = [ 1,  s,  1, 
+			// 		   0,  0,  0, 
+			// 		  -1, -s, -1];
+
+			var imageData = context.getImageData(0, 0, w, h);
+			var r, g, b, idx;
+			for (var y = 1; y < h; y++) {
+				for (var x = 1; x < w; x++) {
+					d[0] = toGray(getPixel(x - 1, y - 1));
+                    d[1] = toGray(getPixel(x - 1, y));
+                    d[2] = toGray(getPixel(x - 1, y + 1));
+                    d[3] = toGray(getPixel(x, y - 1));
+                    d[4] = toGray(getPixel(x, y));
+                    d[5] = toGray(getPixel(x + 1, y));
+                    d[6] = toGray(getPixel(x + 1, y - 1));
+                    d[7] = toGray(getPixel(x + 1, y));
+                    d[8] = toGray(getPixel(x + 1, y - 1));
+
+                    var px = mx[0] * d[0] + mx[1] * d[1] + mx[2] * d[2] +
+                             mx[3] * d[3] + mx[4] * d[4] + mx[5] * d[5] +
+                             mx[6] * d[6] + mx[7] * d[7] + mx[8] * d[8];
+                    var py = my[0] * d[0] + my[1] * d[1] + my[2] * d[2] +
+                             my[3] * d[3] + my[4] * d[4] + my[5] * d[5] +
+                             my[6] * d[6] + my[7] * d[7] + my[8] * d[8];
+
+					var dst = Math.sqrt(px * px + py * py) * amp;
+                    
+                    dst = (dst > 255) ? 255 : dst;
+                    dst = 255 - dst;
+                    
+                    idx = (y * w + x) * 4;
+
+					imageData.data[idx + 0] = dst;
+					imageData.data[idx + 1] = dst;
+					imageData.data[idx + 2] = dst;
+				}
+			}
+			
+			context.putImageData(imageData, 0, 0);
+		}
+
+		</script>
+	</body>
+</html>
